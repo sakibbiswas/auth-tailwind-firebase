@@ -1,13 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { Authcontext } from '../Providers/Authproviders';
+
 
 const Login = () => {
+
+    const { signIN } = useContext(Authcontext)
     const handelLogin = event => {
         event.preventDefault();
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password);
+        signIN(email, password)
+            .then(result => {
+                const loggeduser = result.user;
+                console.log(loggeduser);
+                form.reset();
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorMessage);
+
+            });
+
 
     }
     return (
@@ -38,7 +55,7 @@ const Login = () => {
                             <button className="btn btn-primary">Login</button>
                         </div>
                     </form>
-                    <Link to='/register'><button className="btn btn-link"><small>New to auth master</small> </button></Link>
+                    <Link to='/register' className="btn btn-link"><small>New to auth master.pleacse register</small> </Link>
                 </div>
             </div>
         </div>
