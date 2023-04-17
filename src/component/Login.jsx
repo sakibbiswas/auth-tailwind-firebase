@@ -5,7 +5,7 @@ import { Authcontext } from '../Providers/Authproviders';
 
 const Login = () => {
 
-    const { signIN } = useContext(Authcontext)
+    const { signIN, signInwithgoogle } = useContext(Authcontext)
     const handelLogin = event => {
         event.preventDefault();
         const form = event.target;
@@ -25,7 +25,16 @@ const Login = () => {
 
             });
 
-
+    }
+    const handelgooglebtn = () => {
+        signInwithgoogle()
+            .then(result => {
+                const loggeduser = result.user;
+                console.log(loggeduser);
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
     return (
         <div className="hero min-h-screen bg-base-200">
@@ -56,6 +65,9 @@ const Login = () => {
                         </div>
                     </form>
                     <Link to='/register' className="btn btn-link"><small>New to auth master.pleacse register</small> </Link>
+                </div>
+                <div>
+                    <button onClick={handelgooglebtn} className="btn btn-primary">Google</button>
                 </div>
             </div>
         </div>
